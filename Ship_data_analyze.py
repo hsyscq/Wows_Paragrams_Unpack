@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import sys
 import tkinter as tk
 
 class ShipDataAnalyzer:
@@ -113,7 +114,12 @@ class ShipDataAnalyzer:
         self.ship_name_mapping = {}
         self.rage_name_mapping = {}
         # 使用脚本所在绝对路径，增加健壮性
-        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        if getattr(sys, 'frozen', False):
+            # 如果是打包后的路径
+            self.base_dir = sys._MEIPASS
+        else:
+            # 如果是源代码路径
+            self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.load_ability_map()
         self.load_name_mapping()
         self.load_rage_name_mapping()

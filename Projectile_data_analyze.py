@@ -1,5 +1,5 @@
 import os
-import json
+import sys
 import tkinter as tk
 
 
@@ -50,7 +50,12 @@ class ProjectileDataAnalyzer:
     }
 
     def __init__(self):
-        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        if getattr(sys, 'frozen', False):
+            # 如果是打包后的路径
+            self.base_dir = sys._MEIPASS
+        else:
+            # 如果是源代码路径
+            self.base_dir = os.path.dirname(os.path.abspath(__file__))
 
     def analyze(self, display_area, data):
         """
